@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data Mahasiswa</title>
+    <%- include('partials/libraries_up') %>
+    <style>
+        .col-md-6 {
+            padding: 10px; 
+        }
+    </style>
+</head>
+<body>
+    <%- include('partials/header', { user: user }) %>
+    <%- include('partials/menu_atas', { role: role }) %>
+
+    <div class="page-wrapper">
+        <div class="container-fluid">
+            <div class="row page-titles">
+                </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Data Mahasiswa Angkatan <%= angkatan %> <%= semester %></h4>
+                            <table class="table table-bordered" id="dataTableMahasiswa">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>NIM</th>
+                                        <th>Nama</th>
+                                        <th>Program Studi</th>
+                                        <th>Angkatan</th>
+                                        <th>ID Feeder</th>
+                                        <th>Biaya Masuk</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% mahasiswa.forEach((mhs, index) => { %>
+                                        <tr>
+                                            <td><%= index + 1 %></td>
+                                            <td><%= mhs.nim %></td>
+                                            <td><%= mhs.nama %></td>
+                                            <td><%= mhs.nama_program_studi %></td>
+                                            <td><%= mhs.angkatan %></td>
+                                            <td><%= mhs.id_feeder %></td>
+                                            <td><%= mhs.biaya_masuk || 0 %></td> 
+                                        </tr>
+                                    <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Log Transaksi Pengguna</h4>
+                            <table class="table table-bordered" id="dataTableTransaksi">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Username</th>
+                                        <th>Tipe Transaksi</th>
+                                        <th>Data ID</th>
+                                        <th>Key</th>
+                                        <th>Value</th>
+                                        <th>Waktu</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% logTransaksi.forEach((transaksi, index) => { %>
+                                        <tr>
+                                            <td><%= index + 1 %></td>
+                                            <td><%= transaksi.username %></td>
+                                            <td><%= transaksi.tipe %></td>
+                                            <td><%= transaksi.data_id %></td>
+                                            <td><%= transaksi.key %></td>
+                                            <td><%= transaksi.value %></td>
+                                            <td><%= transaksi.waktu %></td> 
+                                        </tr>
+                                    <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <%- include('partials/libraries_down') %>
+
+        <script>
+            $(document).ready(function() {
+                $('#dataTableMahasiswa').DataTable();
+                $('#dataTableTransaksi').DataTable();
+            });
+        </script>
+    </body>
+</html>

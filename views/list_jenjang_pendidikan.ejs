@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" sizes="16x16" href="<%= IMAGES_URL %>logo-dikti.png">
+    <title><%= pagetitle %></title>
+
+    <%- include('partials/libraries_up') %> 
+
+       <style type="text/css">
+		#dataTableExport thead th {
+			background: #0070bb;
+			color: white;
+			text-align: center !important;
+		}
+		#dataTableGrouping thead th {
+			background: #0070bb;
+			color: white;
+			text-align: center !important;
+		}
+		#dataTableStandard thead th {
+			background: #0070bb;
+			color: white;
+			text-align: center !important;
+		}
+		#basicTableBordered thead th {
+			background: #0070BB;
+			color: white;
+			text-align: center !important;
+		}
+		#basicTableBordered tfoot td {
+			background: #EDF1F5;
+		}
+		.table th, .table td{
+			padding: 0.4rem !important;
+		}
+    </style>
+</head>
+
+<body class="horizontal-nav skin-megna fixed-layout">
+    <div class="preloader">
+        <div class="loader">
+            <div class="loader__figure"></div>
+            <p class="loader__label">e-Feeder</p>
+        </div>
+    </div>
+
+    <div id="main-wrapper">
+        <%- include('partials/header', { user: user }) %>
+        <%- include('partials/menu_atas', { role: role }) %>
+
+        <div class="page-wrapper">
+            <div class="container-fluid">
+                <div class="row page-titles">
+                    <div class="col-md-5 align-self-center">
+                        <h4 class="text-themecolor"><%= pagetitle %></h4>
+                    </div>
+                    <div class="col-md-7 align-self-center text-right">
+                        <div class="d-flex justify-content-end align-items-center">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/beranda">Beranda</a></li>
+                                <li class="breadcrumb-item active"><%= pagetitle %></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <% if (message) { %>
+                            <div class="alert alert-<%= message.type %>">
+                                <%= message.text %>
+                            </div>
+                        <% } %>
+
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Data <%= pagetitle %></h4>
+                                <h6 class="card-subtitle">Halaman ini digunakan untuk menampilkan data <%= pagetitle %></h6>
+
+                                <form id="form" method="POST" action="">
+                                    <div class="table-responsive">
+                                        <table id="basicTableBordered" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <% for(let i = 0; i < list.length; i++) { %>
+                                                        <th width="<%= list[i].width || '' %>"><%= list[i].judul %></th>
+                                                    <% } %>
+                                                    <th width="10%">Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% let number = 1; %>
+                                                <% for(let i = 0; i < listdata.length; i++) { %>
+                                                    <tr>
+                                                        <td><%= number %></td>
+                                                        <% for(let j = 0; j < list.length; j++) { %>
+                                                            <td>
+                                                                <% if (list[j].tipe === 'pilihan') { %>
+                                                                    <%= list[j].data[listdata[i][list[j].kolom]] || '' %>
+                                                                <% } else { %>
+                                                                    <%= listdata[i][list[j].kolom] || '' %> 
+                                                                <% } %>
+                                                            </td>
+                                                        <% } %>
+                                                        <td style="text-align: center !important;">
+                                                            <a href="?page=<%= file %>&act=edit&id=<%= listdata[i][id_data] %>" type="button" class="btn btn-warning btn-sm">
+                                                                <i class="fa fa-pencil"></i>
+                                                            </a>
+                                                            <a href="?page=<%= file %>&act=hapus&id=<%= listdata[i][id_data] %>" type="button" class="btn btn-danger btn-sm" onclick="return confirm('Anda yakin akan menghapus data ini?')">
+                                                                <i class="fa fa-trash-o"></i>
+                                                            </a>
+                                                        </td>
+                                                        <% number++; %>
+                                                    </tr>
+                                                <% } %>
+                                            </tbody>
+
+                                            <tfoot>
+                                                <tr>
+                                                    <td>&nbsp;</td>
+                                                    <% for(let i = 0; i < input.length; i++) { %>
+                                                        <td>
+                                                            <div class="col-sm-12 input-group">
+                                                                <select name="<%= input[i].nama %>" class="select2 custom-select">
+                                                                    <% for(let key in input[i].data) { %>
+                                                                        <option value="<%= key %>"><%= input[i].data[key] %></option>
+                                                                    <% } %>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                    <% } %>
+                                                    <td style="text-align: center !important;">
+                                                        <button type="submit" class="btn btn-success btn-sm" id="act" name="act" value="save"><i class="fa fa-save"></i></button>
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="footer">
+            Copyright © <%= new Date().getFullYear() %> Universitas Tujuh Belas Agustus
+        </footer>
+    </div>
+
+    <%- include('partials/libraries_down') %>
+
+    <script type="text/javascript">
+		$(document).ready(function() {
+			$('#dataTableStandard').DataTable();
+			$(".select2").select2();
+			$(document).ready(function() {
+				var table = $('#dataTableGrouping').DataTable({
+					"columnDefs": [{
+						"visible": false,
+						"targets": 2
+					}],
+					"order": [
+						[2, 'asc']
+					],
+					"displayLength": 25,
+					"drawCallback": function(settings) {
+						var api = this.api();
+						var rows = api.rows({
+							page: 'current'
+						}).nodes();
+						var last = null;
+						api.column(2, {
+							page: 'current'
+						}).data().each(function(group, i) {
+							if (last !== group) {
+								$(rows).eq(i).before('<tr class="group"><td colspan="5">' + group + '</td></tr>');
+								last = group;
+							}
+						});
+					}
+				});
+				// Order by the grouping
+				$('#dataTableGrouping tbody').on('click', 'tr.group', function() {
+					var currentOrder = table.order()[0];
+					if (currentOrder[0] === 2 && currentOrder[1] === 'asc') {
+						table.order([2, 'desc']).draw();
+					} else {
+						table.order([2, 'asc']).draw();
+					}
+				});
+			});
+		});
+		$('#dataTableExport').DataTable({
+			dom: 'Bfrtip',
+			buttons: [
+				'copy', 'csv', 'excel', 'pdf', 'print'
+			]
+		});
+		
+		$("[data-type='filter']").change(function() {
+			$("#act").val("filter");
+			$("#form").submit();
+		});
+	</script>
+</body>
+</html>
+

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ IMAGES_URL }}logo-dikti.png">
+    <title>Beranda</title>
+	
+	<%- include('partials/libraries_up') %>
+	
+    <link href="{{ CSS_URL }}pages/dashboard1.css" rel="stylesheet">
+	<link href="{{ CSS_URL }}pages/tab-page.css" rel="stylesheet">
+</head>
+
+<body class="horizontal-nav skin-megna fixed-layout">
+    <div class="preloader">
+        <div class="loader">
+            <div class="loader__figure"></div>
+            <p class="loader__label">e-Feeder</p>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper">
+        <%- include('partials/header', { user: user }) %> 
+        <%- include('partials/menu_atas', { role: role }) %>
+		
+        <div class="page-wrapper">
+            <div class="container-fluid">
+                
+				<style type="text/css">
+                    #dataTableExport thead th {
+                        background: #0070bb;
+                        color: white;
+                        text-align: center !important;
+                    }
+                    #dataTableGrouping thead th {
+                        background: #0070bb;
+                        color: white;
+                        text-align: center !important;
+                    }
+                    #dataTableStandard thead th {
+                        background: #0070bb;
+                        color: white;
+                        text-align: center !important;
+                    }
+                    .table th, .table td{
+                        padding: 0.4rem !important;
+                    }
+                    .dataTables_wrapper{
+                        width:100% !important;
+                    }
+                </style>
+                
+        <footer class="footer">
+            Copyright © <%= new Date().getFullYear() %> Universitas Tujuh Belas Agustus
+        </footer>
+        
+    </div>
+    <%- include('partials/libraries_down') %>
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#dataTableStandard').DataTable();
+		});
+		
+		
+	</script>
+</body>
+
+</html>

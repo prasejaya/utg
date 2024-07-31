@@ -1,0 +1,47 @@
+<header class="topbar">
+  <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="?page=beranda">   
+
+        <b class="logo-icon">
+          <img src="<%= IMAGES_URL %>logo-dikti.png" width="40px" alt="homepage" class="dark-logo" />
+          <img src="<%= IMAGES_URL %>logo-dikti.png" width="40px" alt="homepage" class="light-logo" />
+        </b>
+        <span class="hidden-sm-down">
+          <img src="<%= IMAGES_URL %>e-feeder-text.png" alt="homepage" class="dark-logo" />
+          <img src="<%= IMAGES_URL %>e-feeder-text.png" class="light-logo" alt="homepage" />
+        </span>
+      </a>
+    </div>
+    <div class="navbar-collapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item"> 
+          <a class="nav-link nav-toggler   
+ d-block d-sm-none waves-effect waves-dark" href="javascript:void(0)">
+            <i class="ti-menu"></i>
+          </a> 
+        </li>
+        <li class="nav-item"> 
+          <a class="nav-link sidebartoggler d-none waves-effect waves-dark" href="javascript:void(0)">
+            <i class="icon-menu"></i>
+          </a>
+        </li>
+      </ul>
+      <ul class="navbar-nav my-lg-0">   
+
+        <li class="nav-item dropdown u-pro">
+          <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">   
+
+            <% if (typeof user !== 'undefined' && user) { %>
+              <%= user %> 
+            <% } %>
+            &nbsp;<i class="fa fa-angle-down"></i>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right animated flipInY">
+            <a href="?page=logout" class="dropdown-item"><i class="icon-logout"></i> Logout</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
